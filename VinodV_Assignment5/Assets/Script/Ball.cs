@@ -10,32 +10,38 @@ public class Ball : MonoBehaviour
     Rigidbody2D rigid;
     int score = 0;
     public TextMeshProUGUI Scoretext;
-    public TextMeshProUGUI over;
-    bool isgameover = false;
+
+    private GameOver gameover;
+    private bool isGameOver = false;
+    private GameWin gameWin;
+    private bool hasWon=false;
+
 
 
 
     void Start()
     {
-        over.gameObject.SetActive(false);
+       
 
         rigid = GetComponent<Rigidbody2D>();
+        gameover=FindAnyObjectByType<GameOver>();
+        gameWin = FindAnyObjectByType<GameWin>();
+
+        gameover.HideGameOver();
+        gameWin.HideWinMessage();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isgameover)
+        if (!isGameOver)
         {
             if (transform.position.y < position)
             {
-                isgameover = true;
-                GameOver();
-                // transform.position = Vector3.zero;
-                //rigid.velocity = Vector3.zero;
-
-
+                isGameOver = true;
+                gameover.ShowGameOver();
+                
             }
 
             if (rigid.velocity.magnitude > Maximumvelocity)
@@ -43,28 +49,45 @@ public class Ball : MonoBehaviour
                 rigid.velocity = Vector3.ClampMagnitude(rigid.velocity, Maximumvelocity);
             }
         }
+
+        if (isGameOver || hasWon)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                ResetGame();
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isgameover)
+        if (!isGameOver)
         {
             if (collision.gameObject.CompareTag("brick"))
             {
                 Destroy(collision.gameObject);
                 score += 5;
                 Scoretext.text = score.ToString("score: 00");
+
+                gameWin.CheckWinCondition();
             }
         }
 
     }
 
-    void GameOver()
+    private void ResetGame()
     {
-        isgameover = true;
-        over.gameObject.SetActive(true);
-        over.text = "GAME OVER";
+        transform.position=Vector3.zero;
+        rigid.velocity=Vector3.zero;
 
+        score = 0;
+        Scoretext.text ="Score:"+ score.ToString(" 00");
+
+        gameover.HideGameOver();
+        gameWin.HideWinMessage();
+
+        isGameOver=false;
+        hasWon=false;
 
     }
 }
