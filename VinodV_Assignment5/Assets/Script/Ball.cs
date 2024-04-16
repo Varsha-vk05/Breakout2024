@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
+// Cool comment
 public class Ball : MonoBehaviour
 {
     //Position when the ball triggers game over
