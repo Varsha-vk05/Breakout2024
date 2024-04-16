@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-// Cool comment
+
 public class Ball : MonoBehaviour
 {
     //Position when the ball triggers game over
@@ -53,8 +53,10 @@ public class Ball : MonoBehaviour
 
     
     void Update()
+        
     {   //Checking if game is not over
         if (!isGameOver)
+
         {   //Checking if ball falls below the position I specified
             if (transform.position.y < position)
             {
@@ -62,6 +64,7 @@ public class Ball : MonoBehaviour
                 isGameOver = true;
                 gameover.ShowGameOver();
             }
+
             //Clamping the velocity of the ball to the specified maxvelocity
             if (rigid.velocity.magnitude > Maximumvelocity)
             {
@@ -70,6 +73,7 @@ public class Ball : MonoBehaviour
         }
         //Checking if game is over or if we have won
         if (isGameOver || hasWon)
+
         {   //Checking if we pressed the enter key so that the game can restart here
             if (Input.GetKeyDown(KeyCode.Return))
             {

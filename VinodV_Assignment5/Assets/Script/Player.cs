@@ -21,10 +21,9 @@ public class Player : MonoBehaviour
         initialPosition=transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Gets the hosrixonatl input from us, LEFT OR RIGHT KEYS 
+        //Gets the horizontal input from us, LEFT OR RIGHT KEYS 
         float paddlehorizontal = Input.GetAxis("Horizontal");
 
         if ((paddlehorizontal > 0 && transform.position.x < paddlemax) || (paddlehorizontal < 0 && transform.position.x > -paddlemax))
@@ -36,7 +35,7 @@ public class Player : MonoBehaviour
 
     public void ResetPaddle()
     {
-        //Resetting the paddle to the initial position
+       //Resetting the paddle to the initial position
        transform.position = initialPosition;
     }
 }
